@@ -1,0 +1,197 @@
+﻿@model SafeTracSecondTest.Models.Dto.UserFilterDTO
+
+@{
+    ViewBag.Title = "Index";
+    ViewData["Users"] = Model.UserDTOs;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <th>
+                First Name
+                @{
+                    if (!Model.Sort_By_First_Name)
+                    {
+                        <span id="spanFirstName" onclick="sortUsersByFirstName()" class="glyphicon glyphicon-triangle-bottom"></span>
+                    }
+                    else
+                    {
+                        <span id="spanFirstName" onclick="sortUsersByFirstName()" class="glyphicon glyphicon-triangle-top"></span>
+                    }
+                }
+                @Html.EditorFor(x => x.First_Name, new { @class = "form-control", @onchange = "sortUsers();" })
+            </th>
+            <th>
+                Surname
+                @{
+                    if (!Model.Sort_By_Last_Name)
+                    {
+                        <span id="spanLastName" onclick="sortUsersByLastName()" class="glyphicon glyphicon-triangle-bottom"></span>
+                    }
+                    else
+                    {
+                        <span id="spanLastName" onclick="sortUsersByLastName()" class="glyphicon glyphicon-triangle-top"></span>
+                    }
+                }
+                @Html.EditorFor(x => x.Last_Name, new { @class = "form-control", @onchange = "sortUsers();" })
+            </th>
+            <th>
+                Email
+                @{
+                    if (!Model.Sort_By_Email)
+                    {
+                        <span id="spanEmail" onclick="sortUsersByEmail()" class="glyphicon glyphicon-triangle-bottom"></span>
+                    }
+                    else
+                    {
+                        <span id="spanEmail" onclick="sortUsersByEmail()" class="glyphicon glyphicon-triangle-top"></span>
+                    }
+                }
+                @Html.EditorFor(x => x.Email_Address, new { @class = "form-control", @onchange = "sortUsers();" })
+            </th>
+            <th>
+                Date Created
+                @{
+                    if (!Model.Sort_By_Date)
+                    {
+                        <span id="spanDate" onclick="sortUsersByDate()" class="glyphicon glyphicon-triangle-bottom"></span>
+                    }
+                    else
+                    {
+                        <span id="spanDate" onclick="sortUsersByDate()" class="glyphicon glyphicon-triangle-top"></span>
+                    }
+                }
+                @Html.EditorFor(x => x.Date_Created, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            </th>
+            <th><input type="submit" value="Search" class="btn btn-default" /></th>
+        </tr>
+        @foreach (var item in ViewData["Users"] as IList<SafeTracSecondTest.Models.Dto.UserDTO>)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.First_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Last_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email_Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Created_AU_Format)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script type="text/javascript">
+    function sortUsersByFirstName() {
+        var checkClass = document.getElementById("spanFirstName").classList.contains('glyphicon-triangle-bottom');
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanFirstName").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-bottom');
+                @Model.Sort_By_First_Name  = true;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = false;
+                break;
+            case false:
+                document.getElementById("spanFirstName").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-top');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = false;
+                break;
+        }
+    }
+
+    function sortUsersByLastName() {
+
+        var checkClass = document.getElementById("spanLastName").classList.contains('glyphicon-triangle-bottom');
+
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanLastName").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanLastName").classList.remove('glyphicon-triangle-bottom');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = true;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = false;
+                break;
+            case false:
+                document.getElementById("spanLastName").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanLastName").classList.remove('glyphicon-triangle-top');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = false;
+                break;
+        }
+    }
+
+    function sortUsersByEmail() {
+
+        var checkClass = document.getElementById("spanEmail").classList.contains('glyphicon-triangle-bottom');
+
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanEmail").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanEmail").classList.remove('glyphicon-triangle-bottom');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = true;
+                @Model.Sort_By_Date = false;
+                break;
+            case false:
+                document.getElementById("spanEmail").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanEmail").classList.remove('glyphicon-triangle-top');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = false;
+                break;
+        }
+    }
+
+    function sortUsersByDate() {
+
+        var checkClass = document.getElementById("spanDate").classList.contains('glyphicon-triangle-bottom');
+
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanDate").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanDate").classList.remove('glyphicon-triangle-bottom');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = true;
+                break;
+            case false:
+                document.getElementById("spanDate").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanDate").classList.remove('glyphicon-triangle-top');
+                @Model.Sort_By_First_Name  = false;
+                @Model.Sort_By_Last_Name = false;
+                @Model.Sort_By_Email = false;
+                @Model.Sort_By_Date = false;
+                break;
+        }
+    }
+
+</script>
