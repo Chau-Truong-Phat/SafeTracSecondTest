@@ -14,65 +14,29 @@
 
 @using (Html.BeginForm())
 {
-    <table class="table">
+    <table class="table" id="usersTable">
         <tr>
-            <th>
+            <th onclick="sortUsers(0)">
                 First Name
-                @{
-                    if (!Model.Sort_By_First_Name)
-                    {
-                        <span id="spanFirstName" onclick="sortUsersByFirstName()" class="glyphicon glyphicon-triangle-bottom"></span>
-                    }
-                    else
-                    {
-                        <span id="spanFirstName" onclick="sortUsersByFirstName()" class="glyphicon glyphicon-triangle-top"></span>
-                    }
-                }
+                <span id="spanFirstName" onclick="sortUsersByFirstName()" class="glyphicon glyphicon-triangle-bottom"></span>
                 @Html.EditorFor(x => x.First_Name, new { @class = "form-control", @onchange = "sortUsers();" })
             </th>
-            <th>
+            <th onclick="sortUsers(1)">
                 Surname
-                @{
-                    if (!Model.Sort_By_Last_Name)
-                    {
-                        <span id="spanLastName" onclick="sortUsersByLastName()" class="glyphicon glyphicon-triangle-bottom"></span>
-                    }
-                    else
-                    {
-                        <span id="spanLastName" onclick="sortUsersByLastName()" class="glyphicon glyphicon-triangle-top"></span>
-                    }
-                }
+                <span id="spanLastName" onclick="sortUsersByLastName()" class="glyphicon glyphicon-triangle-bottom"></span>
                 @Html.EditorFor(x => x.Last_Name, new { @class = "form-control", @onchange = "sortUsers();" })
             </th>
-            <th>
+            <th onclick="sortUsers(2)">
                 Email
-                @{
-                    if (!Model.Sort_By_Email)
-                    {
-                        <span id="spanEmail" onclick="sortUsersByEmail()" class="glyphicon glyphicon-triangle-bottom"></span>
-                    }
-                    else
-                    {
-                        <span id="spanEmail" onclick="sortUsersByEmail()" class="glyphicon glyphicon-triangle-top"></span>
-                    }
-                }
+                <span id="spanEmail" onclick="sortUsersByEmail()" class="glyphicon glyphicon-triangle-bottom"></span>
                 @Html.EditorFor(x => x.Email_Address, new { @class = "form-control", @onchange = "sortUsers();" })
             </th>
-            <th>
+            <th onclick="sortUsers(3)">
                 Date Created
-                @{
-                    if (!Model.Sort_By_Date)
-                    {
-                        <span id="spanDate" onclick="sortUsersByDate()" class="glyphicon glyphicon-triangle-bottom"></span>
-                    }
-                    else
-                    {
-                        <span id="spanDate" onclick="sortUsersByDate()" class="glyphicon glyphicon-triangle-top"></span>
-                    }
-                }
+                <span id="spanDate" onclick="sortUsersByDate()" class="glyphicon glyphicon-triangle-bottom"></span>
                 @Html.EditorFor(x => x.Date_Created, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
             </th>
-            <th><input type="submit" value="Search" class="btn btn-default" /></th>
+            <th></th>
         </tr>
         @foreach (var item in ViewData["Users"] as IList<SafeTracSecondTest.Models.Dto.UserDTO>)
         {
@@ -97,27 +61,58 @@
             </tr>
         }
     </table>
+    <input type="submit" value="Search" class="btn btn-default" />
 }
 
 <script type="text/javascript">
+    function sortUsers(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("usersTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
     function sortUsersByFirstName() {
         var checkClass = document.getElementById("spanFirstName").classList.contains('glyphicon-triangle-bottom');
         switch (checkClass) {
             case true:
                 document.getElementById("spanFirstName").classList.add('glyphicon-triangle-top');
                 document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-bottom');
-                @Model.Sort_By_First_Name  = true;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = false;
                 break;
             case false:
                 document.getElementById("spanFirstName").classList.add('glyphicon-triangle-bottom');
                 document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-top');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = false;
                 break;
         }
     }
@@ -130,18 +125,10 @@
             case true:
                 document.getElementById("spanLastName").classList.add('glyphicon-triangle-top');
                 document.getElementById("spanLastName").classList.remove('glyphicon-triangle-bottom');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = true;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = false;
                 break;
             case false:
                 document.getElementById("spanLastName").classList.add('glyphicon-triangle-bottom');
                 document.getElementById("spanLastName").classList.remove('glyphicon-triangle-top');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = false;
                 break;
         }
     }
@@ -154,18 +141,10 @@
             case true:
                 document.getElementById("spanEmail").classList.add('glyphicon-triangle-top');
                 document.getElementById("spanEmail").classList.remove('glyphicon-triangle-bottom');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = true;
-                @Model.Sort_By_Date = false;
                 break;
             case false:
                 document.getElementById("spanEmail").classList.add('glyphicon-triangle-bottom');
                 document.getElementById("spanEmail").classList.remove('glyphicon-triangle-top');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = false;
                 break;
         }
     }
@@ -178,18 +157,10 @@
             case true:
                 document.getElementById("spanDate").classList.add('glyphicon-triangle-top');
                 document.getElementById("spanDate").classList.remove('glyphicon-triangle-bottom');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = true;
                 break;
             case false:
                 document.getElementById("spanDate").classList.add('glyphicon-triangle-bottom');
                 document.getElementById("spanDate").classList.remove('glyphicon-triangle-top');
-                @Model.Sort_By_First_Name  = false;
-                @Model.Sort_By_Last_Name = false;
-                @Model.Sort_By_Email = false;
-                @Model.Sort_By_Date = false;
                 break;
         }
     }

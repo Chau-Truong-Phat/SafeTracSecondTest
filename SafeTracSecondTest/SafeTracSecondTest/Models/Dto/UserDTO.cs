@@ -24,11 +24,6 @@ namespace SafeTracSecondTest.Models.Dto
         public string Last_Name { get; set; }
         public string Email_Address { get; set; }
         public DateTime Date_Created { get; set; }
-        public bool Sort_By_First_Name { get; set; } 
-        public bool Sort_By_Last_Name { get; set; } 
-        public bool Sort_By_Email { get; set; } 
-        public bool Sort_By_Date { get; set; } 
-
         public List<UserDTO> UserDTOs { get; set; } = new List<UserDTO>();
     }
 }

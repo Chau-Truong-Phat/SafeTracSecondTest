@@ -41,25 +41,6 @@ namespace SafeTracSecondTest.Controllers
             }
             #endregion
 
-            #region sort
-            if (search.Sort_By_First_Name)
-            {
-                query = query.OrderBy(x => x.First_Name);
-            }
-            if (search.Sort_By_Last_Name)
-            {
-                query = query.OrderBy(x => x.Last_Name);
-            }
-            if (search.Sort_By_Email)
-            {
-                query = query.OrderBy(x => x.Email_Address);
-            }
-            if (search.Sort_By_Date)
-            {
-                query = query.OrderBy(x => x.Date_Created);
-            }
-            #endregion
-
             userFilter.UserDTOs = query
                 .Select(x => new UserDTO()
                 {
@@ -72,10 +53,6 @@ namespace SafeTracSecondTest.Controllers
                     Date_Modified_AU_Format = ConvertAustralianUserFriendlyDateFormat(x.Date_Modified.GetValueOrDefault()),
                 })
                 .ToList();
-            userFilter.Sort_By_First_Name = search.Sort_By_First_Name;
-            userFilter.Sort_By_Last_Name = search.Sort_By_Last_Name;
-            userFilter.Sort_By_Email = search.Sort_By_Email;
-            userFilter.Sort_By_Date = search.Sort_By_Date;
 
             return View(userFilter);
         }
