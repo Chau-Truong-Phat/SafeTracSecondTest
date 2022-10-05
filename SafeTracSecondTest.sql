@@ -50,6 +50,7 @@ CREATE TABLE UserPermissions (
 
 INSERT INTO UserPermissions (User_Id, Permission)
 select Id, (((0 | 1) | 2) | 4) | 8 from Users
+
 -- function
 CREATE FUNCTION TO_AUS_DATETIME (@date DATETIME) 
 RETURNS VARCHAR(100)
@@ -77,7 +78,8 @@ BEGIN
 		First_Name, 
 		Last_Name, 
 		CONVERT(nvarchar, DecryptByKey(Email_Address)) AS Email_Address,
-		dbo.TO_AUS_DATETIME(Date_Created) AS Date_Created
+		dbo.TO_AUS_DATETIME(Date_Created) AS Date_Created_AU_Format,
+		Date_Created
 	FROM Users
 	WHERE 1=1 
 		AND (First_Name LIKE ''%'+@FirstName+'%'')
@@ -87,7 +89,7 @@ BEGIN
 
 	IF @DateCreated IS NOT NULL AND @DateCreated <> ''
 	BEGIN
-		select @query = @query + 'AND (DATEDIFF(DAY,Date_Created,'+@DateCreated+') = 0)'
+		select @query = @query + 'AND (DATEDIFF(DAY,Date_Created,'''+@DateCreated+''') = 0)'
 	END
 	IF @SortBy IS NOT NULL AND @SortBy <> ''
 	BEGIN

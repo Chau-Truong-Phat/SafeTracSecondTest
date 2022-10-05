@@ -201,7 +201,7 @@
                 if (txtValue1.toUpperCase().indexOf(firstName) > -1
                     && txtValue2.toUpperCase().indexOf(lastName) > -1
                     && txtValue3.toUpperCase().indexOf(email) > -1
-                    && checkDate) {
+                    || checkDate) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
