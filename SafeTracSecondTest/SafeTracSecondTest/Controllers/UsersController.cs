@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Extensions.Configuration;
 using SafeTracSecondTest.Models;
 using SafeTracSecondTest.Models.Dto;
 
@@ -17,148 +19,89 @@ namespace SafeTracSecondTest.Controllers
         private SafeTracSecondTestDbContext db = new SafeTracSecondTestDbContext();
 
         // GET: Users
-        public ActionResult Index(UserFilterDTO search)
+        public ActionResult IndexP1(UserFilterDTO search)
         {
             UserFilterDTO userFilter = new UserFilterDTO();
-            var query = db.Users.AsEnumerable();
+            string cnnString = System.Configuration.ConfigurationManager.ConnectionStrings["SafeTracSecondTestDbContext"].ConnectionString;
 
-            #region filter
-            if (!String.IsNullOrEmpty(search.First_Name))
+            using (SqlConnection connection = new SqlConnection(cnnString))
             {
-                query = query.Where(x => x.First_Name.ToLowerInvariant().Contains(search.First_Name.ToLowerInvariant())); 
-            }
-            if (!String.IsNullOrEmpty(search.Last_Name))
-            { 
-                query = query.Where(x => x.Last_Name.ToLowerInvariant().Contains(search.Last_Name.ToLowerInvariant())); 
-            }
-            if (!String.IsNullOrEmpty(search.Email_Address))
-            { 
-                query = query.Where(x => x.Email_Address.ToLowerInvariant().Contains(search.Email_Address.ToLowerInvariant())); 
-            }
-            if (!search.Date_Created.Equals(DateTime.MinValue))
-            { 
-                query = query.Where(x => x.Date_Created.Equals(search.Date_Created)); 
-            }
-            #endregion
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                SqlCommand command = new SqlCommand("GetUsers", connection);
+                command.Parameters.Add("@FirstName", SqlDbType.NVarChar).Value = search.First_Name;
+                command.Parameters.Add("@LastName", SqlDbType.NVarChar).Value = search.Last_Name;
+                command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = search.Email_Address;
+                command.Parameters.Add("@DateCreated", SqlDbType.NVarChar).Value = search.Date_Created.HasValue ? search.Date_Created.Value.ToString("yyyy-MM-dd") : null;
+                command.Parameters.Add("@SortBy", SqlDbType.NVarChar).Value = search.Sort_Order;
+                command.Parameters.Add("@SortDirection", SqlDbType.Bit).Value = search.Sort_Direction;
+                command.CommandType = CommandType.StoredProcedure;
 
-            userFilter.UserDTOs = query
-                .Select(x => new UserDTO()
+                connection.Open();
+                using (SqlDataAdapter sda = new SqlDataAdapter())
                 {
-                    Id = x.Id,
-                    First_Name = x.First_Name,
-                    Last_Name = x.Last_Name,
-                    Email_Address = "test@gmail.com",
-                    User_Password = x.User_Password,
-                    Date_Created_AU_Format = ConvertAustralianUserFriendlyDateFormat(x.Date_Created.GetValueOrDefault()),
-                    Date_Modified_AU_Format = ConvertAustralianUserFriendlyDateFormat(x.Date_Modified.GetValueOrDefault()),
-                })
-                .ToList();
+                    command.Connection = connection;
+                    sda.SelectCommand = command;
 
+                    using (DataSet ds = new DataSet())
+                    {
+                        sda.Fill(ds);
+                        userFilter.UserDTOs = (from DataRow dr in ds.Tables[0].Rows
+                                               select new UserDTO
+                                               {
+                                                   Id = int.Parse(dr["Id"].ToString()),
+                                                   First_Name = dr["First_Name"].ToString(),
+                                                   Last_Name = dr["Last_Name"].ToString(),
+                                                   Email_Address = dr["Email_Address"].ToString(),
+                                                   Date_Created = DateTime.Parse(dr["Date_Created"].ToString()),
+                                                   Date_Created_AU_Format = ConvertAustralianUserFriendlyDateFormat(DateTime.Parse(dr["Date_Created"].ToString())),
+                                               }).ToList();
+                    }
+                }
+            }
             return View(userFilter);
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult IndexP2(UserFilterDTO search)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
+            UserFilterDTO userFilter = new UserFilterDTO();
+            string cnnString = System.Configuration.ConfigurationManager.ConnectionStrings["SafeTracSecondTestDbContext"].ConnectionString;
 
-        // GET: Users/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,First_Name,Last_Name,User_Password,Email_Address,Date_Created,Date_Modified")] User user)
-        {
-            if (ModelState.IsValid)
+            using (SqlConnection connection = new SqlConnection(cnnString))
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                SqlCommand command = new SqlCommand("GetUsers", connection);
+                command.Parameters.Add("@FirstName", SqlDbType.NVarChar).Value = search.First_Name;
+                command.Parameters.Add("@LastName", SqlDbType.NVarChar).Value = search.Last_Name;
+                command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = search.Email_Address;
+                command.Parameters.Add("@DateCreated", SqlDbType.NVarChar).Value = search.Date_Created.HasValue? search.Date_Created.Value.ToString("yyyy-MM-dd") : null;
+                command.Parameters.Add("@SortBy", SqlDbType.NVarChar).Value = search.Sort_Order;
+                command.Parameters.Add("@SortDirection", SqlDbType.Bit).Value = search.Sort_Direction;
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (SqlDataAdapter sda = new SqlDataAdapter())
+                {
+                    command.Connection = connection;
+                    sda.SelectCommand = command;
+
+                    using (DataSet ds = new DataSet())
+                    {
+                        sda.Fill(ds);
+                        userFilter.UserDTOs = (from DataRow dr in ds.Tables[0].Rows
+                                         select new UserDTO
+                                         {
+                                             Id = int.Parse(dr["Id"].ToString()),
+                                             First_Name = dr["First_Name"].ToString(),
+                                             Last_Name = dr["Last_Name"].ToString(),
+                                             Email_Address = dr["Email_Address"].ToString(),
+                                             Date_Created = DateTime.Parse(dr["Date_Created"].ToString()),
+                                             Date_Created_AU_Format = ConvertAustralianUserFriendlyDateFormat(DateTime.Parse(dr["Date_Created"].ToString())),
+                                         }).ToList();
+                    }
+                }
             }
 
-            return View(user);
-        }
-
-        // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,First_Name,Last_Name,User_Password,Email_Address,Date_Created,Date_Modified")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View(userFilter);
         }
 
         private string ConvertAustralianUserFriendlyDateFormat(DateTime date)

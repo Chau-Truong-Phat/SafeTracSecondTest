@@ -1,0 +1,212 @@
+﻿@model SafeTracSecondTest.Models.Dto.UserFilterDTO
+
+@{
+    ViewBag.Title = "Index";
+    ViewData["Users"] = Model.UserDTOs;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    <table class="table" id="usersTable">
+        <tr>
+            <th>
+                First Name
+                <span id="spanFirstName" onclick="sortUsersByFirstName()" class="glyphicon glyphicon-triangle-bottom"></span>
+                <br />
+                @Html.EditorFor(x => x.First_Name, new { htmlAttributes = new { @class = "form-control", @onkeyup = "filterUsers(this);" } })
+            </th>
+            <th>
+                Surname
+                <span id="spanLastName" onclick="sortUsersByLastName()" class="glyphicon glyphicon-triangle-bottom"></span>
+                <br />
+                @Html.EditorFor(x => x.Last_Name, new { htmlAttributes = new { @class = "form-control", @onkeyup = "filterUsers(this);" } })
+            </th>
+            <th>
+                Email
+                <span id="spanEmail" onclick="sortUsersByEmail()" class="glyphicon glyphicon-triangle-bottom"></span>
+                <br />
+                @Html.EditorFor(x => x.Email_Address, new { htmlAttributes = new { @class = "form-control", @onkeyup = "filterUsers(this);" } })
+            </th>
+            <th>
+                Date Created
+                <span id="spanDate" onclick="sortUsersByDate()" class="glyphicon glyphicon-triangle-bottom"></span>
+                <br />
+                @Html.EditorFor(x => x.Date_Created, new { htmlAttributes = new { @class = "form-control", @type = "date", @onchange = "filterUsers(this);" } })
+            </th>
+            <th style="display: none"></th>
+        </tr>
+        @foreach (var item in ViewData["Users"] as IList<SafeTracSecondTest.Models.Dto.UserDTO>)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.First_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Last_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email_Address)
+                </td>
+                <td>
+                    @item.Date_Created.ToString("dd/MM/yyyy, hh:mm:ss tt")
+                </td>
+                <td style="display: none">
+                    @item.Date_Created.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script type="text/javascript">
+    function sortUsers(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("usersTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    function sortUsersByFirstName() {
+        var checkClass = document.getElementById("spanFirstName").classList.contains('glyphicon-triangle-bottom');
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanFirstName").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-bottom');
+                break;
+            case false:
+                document.getElementById("spanFirstName").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-top');
+                break;
+        }
+        sortUsers(0)
+    }
+
+    function sortUsersByLastName() {
+
+        var checkClass = document.getElementById("spanLastName").classList.contains('glyphicon-triangle-bottom');
+
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanLastName").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanLastName").classList.remove('glyphicon-triangle-bottom');
+                break;
+            case false:
+                document.getElementById("spanLastName").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanLastName").classList.remove('glyphicon-triangle-top');
+                break;
+        }
+        sortUsers(1)
+
+    }
+
+    function sortUsersByEmail() {
+
+        var checkClass = document.getElementById("spanEmail").classList.contains('glyphicon-triangle-bottom');
+
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanEmail").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanEmail").classList.remove('glyphicon-triangle-bottom');
+                break;
+            case false:
+                document.getElementById("spanEmail").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanEmail").classList.remove('glyphicon-triangle-top');
+                break;
+        }
+        sortUsers(2)
+
+    }
+
+    function sortUsersByDate() {
+
+        var checkClass = document.getElementById("spanDate").classList.contains('glyphicon-triangle-bottom');
+
+        switch (checkClass) {
+            case true:
+                document.getElementById("spanDate").classList.add('glyphicon-triangle-top');
+                document.getElementById("spanDate").classList.remove('glyphicon-triangle-bottom');
+                break;
+            case false:
+                document.getElementById("spanDate").classList.add('glyphicon-triangle-bottom');
+                document.getElementById("spanDate").classList.remove('glyphicon-triangle-top');
+                break;
+        }
+        sortUsers(3)
+    }
+
+    function filterUsers(value) {
+        var table, tr, i;
+        var firstName = document.getElementById("First_Name").value.toUpperCase();
+        var lastName = document.getElementById("Last_Name").value.toUpperCase();
+        var email = document.getElementById("Email_Address").value.toUpperCase();
+        var date = document.getElementById("Date_Created").value.toUpperCase();
+
+        table = document.getElementById("usersTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            var td1 = tr[i].getElementsByTagName("td")[0];
+            var td2 = tr[i].getElementsByTagName("td")[1];
+            var td3 = tr[i].getElementsByTagName("td")[2];
+            var td4 = tr[i].getElementsByTagName("td")[4];
+
+            if (td1 || td2 || td3 || td4) {
+                var txtValue1 = td1.textContent || td1.innerText;
+                var txtValue2 = td2.textContent || td2.innerText;
+                var txtValue3 = td3.textContent || td3.innerText;
+                var txtValue4 = td4.textContent || td4.innerText;
+
+                var checkDate = false;
+
+                if (new Date(date).getDay() == new Date(txtValue4).getDay()
+                    && new Date(date).getMonth() == new Date(txtValue4).getMonth()
+                    && new Date(date).getFullYear() == new Date(txtValue4).getFullYear()) {
+                    checkDate = true;
+                }
+
+                if (txtValue1.toUpperCase().indexOf(firstName) > -1
+                    && txtValue2.toUpperCase().indexOf(lastName) > -1
+                    && txtValue3.toUpperCase().indexOf(email) > -1
+                    && checkDate) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

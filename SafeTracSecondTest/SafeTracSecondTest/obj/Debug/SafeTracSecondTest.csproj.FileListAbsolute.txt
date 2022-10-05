@@ -163,3 +163,17 @@ D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\obj\Debug\S
 D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\obj\Debug\SafeTracSecondTest.csproj.CoreCompileInputs.cache
 D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\obj\Debug\SafeTracSecondTest.dll
 D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\obj\Debug\SafeTracSecondTest.pdb
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\Microsoft.Extensions.Primitives.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Buffers.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Memory.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Numerics.Vectors.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.ValueTuple.dll
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\Microsoft.Extensions.Configuration.Abstractions.xml
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\Microsoft.Extensions.Primitives.xml
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Buffers.xml
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Memory.xml
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Numerics.Vectors.xml
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\Personal\SafeTracSecondTest\SafeTracSecondTest\SafeTracSecondTest\bin\System.ValueTuple.xml

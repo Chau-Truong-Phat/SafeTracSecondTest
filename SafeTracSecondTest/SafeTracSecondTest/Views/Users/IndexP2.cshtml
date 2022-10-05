@@ -1,0 +1,168 @@
+﻿@model SafeTracSecondTest.Models.Dto.UserFilterDTO
+
+@{
+    ViewBag.Title = "Index";
+    ViewData["Users"] = Model.UserDTOs;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    <table class="table" id="usersTable">
+        <tr>
+            <th>
+                @Html.ActionLink("First Name", "IndexP2", new { Sort_Order = "First_Name", Sort_Direction = 1 }, new {@style = "color: black"})
+                <br />
+                @Html.EditorFor(x => x.First_Name, new { @class = "form-control" })
+            </th>
+            <th>
+                @Html.ActionLink("Surname", "IndexP2", new { Sort_Order = "Last_Name", Sort_Direction = 1 }, new { @style = "color: black" })
+                <br />
+                @Html.EditorFor(x => x.Last_Name, new { @class = "form-control" })
+            </th>
+            <th>
+                @Html.ActionLink("Email", "IndexP2", new { Sort_Order = "Email_Address", Sort_Direction = 1 }, new { @style = "color: black" })
+                <br />
+                @Html.EditorFor(x => x.Email_Address, new { @class = "form-control" })
+            </th>
+            <th>
+                @Html.ActionLink("Date Created", "IndexP2", new { Sort_Order = "Date_Created", Sort_Direction = 1 }, new { @style = "color: black" })
+                <br />
+                @Html.EditorFor(x => x.Date_Created, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in ViewData["Users"] as IList<SafeTracSecondTest.Models.Dto.UserDTO>)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.First_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Last_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email_Address)
+                </td>
+                <td>
+                    @item.Date_Created.ToString("dd/MM/yyyy, hh:mm:ss tt")
+                </td>
+                <td style="display: none">
+                    @item.Date_Created.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+        }
+    </table>
+    <input type="submit" value="Search" class="btn btn-default" />
+}
+
+<script type="text/javascript">
+    //function sortUsers(n) {
+    //    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    //    table = document.getElementById("usersTable");
+    //    switching = true;
+    //    dir = "asc";
+    //    while (switching) {
+    //        switching = false;
+    //        rows = table.rows;
+
+    //        for (i = 1; i < (rows.length - 1); i++) {
+    //            shouldSwitch = false;
+    //            x = rows[i].getElementsByTagName("TD")[n];
+    //            y = rows[i + 1].getElementsByTagName("TD")[n];
+    //            if (dir == "asc") {
+    //                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+    //                    shouldSwitch = true;
+    //                    break;
+    //                }
+    //            } else if (dir == "desc") {
+    //                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+    //                    shouldSwitch = true;
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //        if (shouldSwitch) {
+    //            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+    //            switching = true;
+    //            switchcount++;
+    //        } else {
+    //            if (switchcount == 0 && dir == "asc") {
+    //                dir = "desc";
+    //                switching = true;
+    //            }
+    //        }
+    //    }
+    //}
+
+    //function sortUsersByFirstName() {
+    //    var checkClass = document.getElementById("spanFirstName").classList.contains('glyphicon-triangle-bottom');
+    //    switch (checkClass) {
+    //        case true:
+    //            document.getElementById("spanFirstName").classList.add('glyphicon-triangle-top');
+    //            document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-bottom');
+    //            break;
+    //        case false:
+    //            document.getElementById("spanFirstName").classList.add('glyphicon-triangle-bottom');
+    //            document.getElementById("spanFirstName").classList.remove('glyphicon-triangle-top');
+    //            break;
+    //    }
+    //    sortUsers(0)
+    //}
+
+    //function sortUsersByLastName() {
+
+    //    var checkClass = document.getElementById("spanLastName").classList.contains('glyphicon-triangle-bottom');
+
+    //    switch (checkClass) {
+    //        case true:
+    //            document.getElementById("spanLastName").classList.add('glyphicon-triangle-top');
+    //            document.getElementById("spanLastName").classList.remove('glyphicon-triangle-bottom');
+    //            break;
+    //        case false:
+    //            document.getElementById("spanLastName").classList.add('glyphicon-triangle-bottom');
+    //            document.getElementById("spanLastName").classList.remove('glyphicon-triangle-top');
+    //            break;
+    //    }
+    //    sortUsers(1)
+
+    //}
+
+    //function sortUsersByEmail() {
+
+    //    var checkClass = document.getElementById("spanEmail").classList.contains('glyphicon-triangle-bottom');
+
+    //    switch (checkClass) {
+    //        case true:
+    //            document.getElementById("spanEmail").classList.add('glyphicon-triangle-top');
+    //            document.getElementById("spanEmail").classList.remove('glyphicon-triangle-bottom');
+    //            break;
+    //        case false:
+    //            document.getElementById("spanEmail").classList.add('glyphicon-triangle-bottom');
+    //            document.getElementById("spanEmail").classList.remove('glyphicon-triangle-top');
+    //            break;
+    //    }
+    //    sortUsers(2)
+
+    //}
+
+    //function sortUsersByDate() {
+
+    //    var checkClass = document.getElementById("spanDate").classList.contains('glyphicon-triangle-bottom');
+
+    //    switch (checkClass) {
+    //        case true:
+    //            document.getElementById("spanDate").classList.add('glyphicon-triangle-top');
+    //            document.getElementById("spanDate").classList.remove('glyphicon-triangle-bottom');
+    //            break;
+    //        case false:
+    //            document.getElementById("spanDate").classList.add('glyphicon-triangle-bottom');
+    //            document.getElementById("spanDate").classList.remove('glyphicon-triangle-top');
+    //            break;
+    //    }
+    //    sortUsers(3)
+    //}
+
+</script>
