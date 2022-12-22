@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorkingAPI", "MedWorkingAPI\MedWorkingAPI.csproj", "{84998F1C-10D2-4121-8C0E-C5A5FCDA1AD3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MedWorking.Core", "MedWorking.Core", "{BDEED3E4-07C7-4691-86D0-552478A432D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorking.Core.Application", "MedWorking.Core.Application\MedWorking.Core.Application.csproj", "{2D34CAE3-9D51-44B6-A474-21E3C033B878}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorking.Core.Common", "MedWorking.Core.Common\MedWorking.Core.Common.csproj", "{6EC6D6CC-FDEF-4961-89CB-CD3FA011ECA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorking.Core.EntityFramework", "MedWorking.Core.EntityFramework\MedWorking.Core.EntityFramework.csproj", "{717CDA86-202C-43EE-B6A9-2E0E4161C0AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorking.Core.Startup", "MedWorking.Core.Startup\MedWorking.Core.Startup.csproj", "{917822ED-CE2D-4F45-8039-911348A33781}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84998F1C-10D2-4121-8C0E-C5A5FCDA1AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84998F1C-10D2-4121-8C0E-C5A5FCDA1AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84998F1C-10D2-4121-8C0E-C5A5FCDA1AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84998F1C-10D2-4121-8C0E-C5A5FCDA1AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D34CAE3-9D51-44B6-A474-21E3C033B878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D34CAE3-9D51-44B6-A474-21E3C033B878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D34CAE3-9D51-44B6-A474-21E3C033B878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D34CAE3-9D51-44B6-A474-21E3C033B878}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EC6D6CC-FDEF-4961-89CB-CD3FA011ECA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EC6D6CC-FDEF-4961-89CB-CD3FA011ECA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EC6D6CC-FDEF-4961-89CB-CD3FA011ECA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EC6D6CC-FDEF-4961-89CB-CD3FA011ECA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717CDA86-202C-43EE-B6A9-2E0E4161C0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717CDA86-202C-43EE-B6A9-2E0E4161C0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717CDA86-202C-43EE-B6A9-2E0E4161C0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717CDA86-202C-43EE-B6A9-2E0E4161C0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917822ED-CE2D-4F45-8039-911348A33781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917822ED-CE2D-4F45-8039-911348A33781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917822ED-CE2D-4F45-8039-911348A33781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917822ED-CE2D-4F45-8039-911348A33781}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D34CAE3-9D51-44B6-A474-21E3C033B878} = {BDEED3E4-07C7-4691-86D0-552478A432D1}
+		{6EC6D6CC-FDEF-4961-89CB-CD3FA011ECA1} = {BDEED3E4-07C7-4691-86D0-552478A432D1}
+		{717CDA86-202C-43EE-B6A9-2E0E4161C0AD} = {BDEED3E4-07C7-4691-86D0-552478A432D1}
+		{917822ED-CE2D-4F45-8039-911348A33781} = {BDEED3E4-07C7-4691-86D0-552478A432D1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F735BB9-D841-4370-96F8-D6F0C5AD8438}
+	EndGlobalSection
+EndGlobal

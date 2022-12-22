@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Host=localhost;Port=5432;Database=MedWorking_Dev;Username=postgres;Password=123456aA@;" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models -f

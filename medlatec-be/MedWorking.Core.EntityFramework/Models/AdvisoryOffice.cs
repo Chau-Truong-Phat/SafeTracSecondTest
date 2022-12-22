@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace MedWorking.Core.EntityFramework.Models
+{
+    public partial class AdvisoryOffice
+    {
+        public Guid Id { get; set; }
+        public Guid? DocId { get; set; }
+        public long? OfficeId { get; set; }
+        public string? OfficeName { get; set; }
+        public string? Comment { get; set; }
+    }
+}

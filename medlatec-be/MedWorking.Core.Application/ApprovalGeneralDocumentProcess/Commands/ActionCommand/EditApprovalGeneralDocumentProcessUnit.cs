@@ -1,0 +1,5 @@
+﻿namespace MedWorking.Core.Application.ApprovalGeneralDocumentProcess.Commands.ActionCommand;
+
+public class EditApprovalGeneralDocumentProcessUnit:ApprovalGeneralDocumentProcessUnitCommand
+{
+}
